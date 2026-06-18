@@ -3,6 +3,7 @@ import {
   motion,
   AnimatePresence,
 } from "framer-motion";
+import { FaTimes } from "react-icons/fa";
 
 import Button from "../ui/Button";
 import Input from "../ui/Input";
@@ -22,7 +23,8 @@ function TaskModal({
     deadline: "",
   };
 
-  const [form, setForm] = useState(initialForm);
+  const [form, setForm] =
+    useState(initialForm);
 
   useEffect(() => {
     if (initialData) {
@@ -63,73 +65,97 @@ function TaskModal({
           className="
             fixed
             inset-0
-            bg-black/50
-            backdrop-blur-sm
-            flex
-            justify-center
-            items-center
-            p-4
             z-50
+            flex
+            items-center
+            justify-center
+            bg-black/50
+            p-4
+            backdrop-blur-sm
           "
         >
           <motion.div
             initial={{
-              scale: 0.9,
               opacity: 0,
+              scale: 0.9,
+              y: 20,
             }}
             animate={{
-              scale: 1,
               opacity: 1,
+              scale: 1,
+              y: 0,
             }}
             exit={{
-              scale: 0.9,
               opacity: 0,
+              scale: 0.9,
+              y: 20,
             }}
             transition={{
               duration: 0.25,
             }}
             className="
               w-full
-              max-w-2xl
+              max-w-3xl
+              overflow-hidden
+              rounded-[32px]
               bg-white
-              rounded-3xl
               shadow-2xl
-              p-8
             "
           >
-            <div className="mb-8">
-              <h2
-                className="
-                  text-3xl
-                  font-bold
-                  text-[var(--text-primary)]
-                "
-              >
-                {initialData
-                  ? "Edit Task"
-                  : "Create New Task"}
-              </h2>
+            {/* Header */}
+            <div
+              className="
+                flex
+                items-center
+                justify-between
+                bg-gradient-to-r
+                from-[#57BA98]
+                to-[#65CCB8]
+                p-7
+                text-white
+              "
+            >
+              <div>
+                <h2 className="text-3xl font-bold">
+                  {initialData
+                    ? "Edit Task"
+                    : "Create New Task"}
+                </h2>
 
-              <p
+                <p className="mt-2 opacity-90">
+                  Organize your work
+                  efficiently.
+                </p>
+              </div>
+
+              <button
+                onClick={onClose}
                 className="
-                  mt-2
-                  text-[var(--text-secondary)]
+                  flex
+                  h-10
+                  w-10
+                  items-center
+                  justify-center
+                  rounded-full
+                  bg-white/20
+                  hover:bg-white/30
                 "
               >
-                Fill in the task details below.
-              </p>
+                <FaTimes />
+              </button>
             </div>
 
+            {/* Body */}
             <form
               onSubmit={handleSubmit}
-              className="space-y-5"
+              className="space-y-6 p-8"
             >
               <Input
-                label="Title"
+                label="Task Title"
                 name="title"
                 value={form.title}
                 onChange={handleChange}
-                placeholder="Task title"
+                placeholder="Enter task title"
               />
 
               <Input
@@ -137,7 +163,7 @@ function TaskModal({
                 name="description"
                 value={form.description}
                 onChange={handleChange}
-                placeholder="Task description"
+                placeholder="Describe your task"
               />
 
               <Input
@@ -148,9 +174,9 @@ function TaskModal({
                 placeholder="Work, Study, Personal..."
               />
 
-              <div className="grid md:grid-cols-2 gap-5">
+              <div className="grid gap-5 md:grid-cols-2">
                 <div>
-                  <label className="font-medium text-sm">
+                  <label className="text-sm font-medium">
                     Priority
                   </label>
 
@@ -160,15 +186,16 @@ function TaskModal({
                     onChange={handleChange}
                     className="
                       mt-2
+                      h-12
                       w-full
-                      px-4
-                      py-3
                       rounded-2xl
                       border
                       border-[var(--border)]
-                      outline-none
+                      bg-white
+                      px-4
+                      focus:border-[#57BA98]
                       focus:ring-4
-                      focus:ring-[var(--accent)]
+                      focus:ring-[#57BA9820]
                     "
                   >
                     <option>
@@ -186,7 +213,7 @@ function TaskModal({
                 </div>
 
                 <div>
-                  <label className="font-medium text-sm">
+                  <label className="text-sm font-medium">
                     Status
                   </label>
 
@@ -196,15 +223,16 @@ function TaskModal({
                     onChange={handleChange}
                     className="
                       mt-2
+                      h-12
                       w-full
-                      px-4
-                      py-3
                       rounded-2xl
                       border
                       border-[var(--border)]
-                      outline-none
+                      bg-white
+                      px-4
+                      focus:border-[#57BA98]
                       focus:ring-4
-                      focus:ring-[var(--accent)]
+                      focus:ring-[#57BA9820]
                     "
                   >
                     <option>
@@ -230,23 +258,36 @@ function TaskModal({
                 onChange={handleChange}
               />
 
-              <div className="flex gap-4 pt-4">
+              <div
+                className="
+                  flex
+                  justify-end
+                  gap-4
+                  pt-3
+                "
+              >
                 <Button
                   type="button"
+                  fullWidth={false}
                   onClick={() => {
                     setForm(initialForm);
                     onClose();
                   }}
                   className="
                     bg-gray-200
-                    hover:bg-gray-300
+                    px-8
                     text-gray-700
+                    hover:bg-gray-300
                   "
                 >
                   Cancel
                 </Button>
 
-                <Button type="submit">
+                <Button
+                  type="submit"
+                  fullWidth={false}
+                  className="px-8"
+                >
                   {initialData
                     ? "Update Task"
                     : "Create Task"}

@@ -53,14 +53,14 @@ function Sidebar() {
   return (
     <aside
       className="
-        w-72
-        h-screen
+        h-full
         bg-white
+        rounded-r-[32px]
+        shadow-xl
         border-r
         border-[var(--border)]
         flex
         flex-col
-        shadow-sm
         overflow-hidden
       "
     >
@@ -68,8 +68,8 @@ function Sidebar() {
 
       <div
         className="
-          px-6
-          py-6
+          px-7
+          py-8
           border-b
           border-[var(--border)]
         "
@@ -82,10 +82,9 @@ function Sidebar() {
       <nav
         className="
           flex-1
-          px-4
-          py-6
-          space-y-2
-          overflow-y-auto
+          px-5
+          py-7
+          space-y-3
         "
       >
         {menuItems.map((item) => (
@@ -105,50 +104,83 @@ function Sidebar() {
                   flex
                   items-center
                   gap-4
-                  px-4
-                  py-3
+                  px-5
+                  py-4
                   rounded-2xl
+                  font-medium
+                  text-[16px]
                   transition-all
                   duration-300
                   ${
                     isActive
-                      ? "bg-[var(--primary)] text-white shadow-md"
-                      : "text-gray-600 hover:bg-gray-100"
+                      ? "bg-gradient-to-r from-[#57BA98] to-[#65CCB8] text-white shadow-lg"
+                      : "text-gray-600 hover:bg-[#F5F7F8]"
                   }
                 `}
               >
-                <span className="text-lg">
+                <span className="text-xl">
                   {item.icon}
                 </span>
 
-                <span className="font-medium">
-                  {item.name}
-                </span>
+                {item.name}
               </motion.div>
             )}
           </NavLink>
         ))}
       </nav>
 
-      {/* User */}
+      {/* User Section */}
 
       <div
         className="
           p-5
           border-t
           border-[var(--border)]
-          bg-white
         "
       >
-        <div className="mb-4">
-          <h3 className="font-semibold text-gray-800">
-            {user?.name ||
-              "Guest User"}
-          </h3>
+        <div
+          className="
+            rounded-3xl
+            border
+            border-[#EEF2F4]
+            bg-[#FAFCFC]
+            p-4
+            flex
+            items-center
+            gap-3
+          "
+        >
+          <div
+            className="
+              w-12
+              h-12
+              rounded-full
+              bg-gradient-to-r
+              from-[#57BA98]
+              to-[#65CCB8]
+              flex
+              items-center
+              justify-center
+              text-white
+              font-bold
+            "
+          >
+            {user?.name
+              ?.charAt(0)
+              ?.toUpperCase() ||
+              "U"}
+          </div>
 
-          <p className="text-sm text-gray-500 break-all">
-            {user?.email}
-          </p>
+          <div className="flex-1 overflow-hidden">
+            <h3 className="font-semibold truncate">
+              {user?.name ||
+                "Guest User"}
+            </h3>
+
+            <p className="text-xs text-gray-500 truncate">
+              {user?.email}
+            </p>
+          </div>
         </div>
 
         <motion.button
@@ -160,9 +192,10 @@ function Sidebar() {
           }}
           onClick={handleLogout}
           className="
+            mt-5
             w-full
-            py-3
-            rounded-xl
+            h-12
+            rounded-2xl
             bg-red-50
             hover:bg-red-100
             text-red-600

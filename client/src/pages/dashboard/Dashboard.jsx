@@ -5,8 +5,11 @@ import {
   FaSpinner,
   FaCheckCircle,
   FaArrowRight,
+  FaPlus,
 } from "react-icons/fa";
+
 import { motion } from "framer-motion";
+import { Link } from "react-router-dom";
 
 import { getTasks } from "../../services/taskService";
 import StatCard from "../../components/cards/StatCard";
@@ -17,7 +20,6 @@ function Dashboard() {
   const loadTasks = async () => {
     try {
       const data = await getTasks();
-
       setTasks(data);
     } catch (error) {
       console.log(error);
@@ -44,14 +46,24 @@ function Dashboard() {
 
   const recentTasks = tasks.slice(0, 5);
 
+  const today = new Date().toLocaleDateString(
+    "en-US",
+    {
+      weekday: "long",
+      month: "long",
+      day: "numeric",
+    }
+  );
+
   return (
-    <div className="space-y-7">
+    <div className="space-y-8">
+
       {/* Hero */}
 
       <motion.section
         initial={{
           opacity: 0,
-          y: 15,
+          y: 20,
         }}
         animate={{
           opacity: 1,
@@ -61,34 +73,80 @@ function Dashboard() {
           rounded-3xl
           bg-gradient-to-r
           from-[#57BA98]
-          via-[#5FC2A6]
           to-[#65CCB8]
-          px-8
-          py-8
-          lg:px-10
-          lg:py-9
+          p-8
+          lg:p-10
+          shadow-xl
           text-white
-          shadow-lg
         "
       >
-        <h1 className="text-3xl lg:text-4xl font-bold">
-          Welcome Back 👋
-        </h1>
-
-        <p
+        <div
           className="
-            mt-3
-            text-base
-            opacity-90
-            max-w-2xl
-            leading-7
+            flex
+            flex-col
+            lg:flex-row
+            justify-between
+            lg:items-center
+            gap-6
           "
         >
-          Stay productive, organize your
-          projects, manage deadlines and
-          collaborate efficiently with
-          TaskFlow Pro.
-        </p>
+          <div>
+
+            <p className="opacity-90">
+              {today}
+            </p>
+
+            <h1
+              className="
+                text-4xl
+                lg:text-5xl
+                font-bold
+                mt-2
+              "
+            >
+              Welcome Back 👋
+            </h1>
+
+            <p
+              className="
+                mt-4
+                max-w-xl
+                leading-7
+                opacity-95
+              "
+            >
+              Stay organized, manage deadlines,
+              and keep your productivity high
+              with TaskFlow Pro.
+            </p>
+
+          </div>
+
+          <Link
+            to="/tasks"
+            className="
+              flex
+              items-center
+              gap-2
+              bg-white
+              text-[#57BA98]
+              px-6
+              py-3
+              rounded-2xl
+              font-semibold
+              hover:scale-105
+              transition
+              w-fit
+            "
+          >
+            <FaPlus />
+
+            New Task
+
+          </Link>
+
+        </div>
+
       </motion.section>
 
       {/* Stats */}
@@ -99,7 +157,7 @@ function Dashboard() {
           grid-cols-1
           sm:grid-cols-2
           xl:grid-cols-4
-          gap-5
+          gap-6
         "
       >
         <StatCard
@@ -129,9 +187,10 @@ function Dashboard() {
           icon={<FaCheckCircle />}
           color="#22C55E"
         />
+
       </section>
 
-      {/* Recent Tasks */}
+      {/* Recent */}
 
       <section
         className="
@@ -140,41 +199,54 @@ function Dashboard() {
           shadow-lg
           border
           border-[var(--border)]
-          p-6
+          p-7
         "
       >
-        <div className="flex justify-between items-center mb-6">
+        <div
+          className="
+            flex
+            justify-between
+            items-center
+            mb-6
+          "
+        >
           <div>
+
             <h2 className="text-2xl font-bold">
               Recent Tasks
             </h2>
 
-            <p className="text-sm text-gray-500 mt-1">
-              Your latest activities
+            <p className="text-gray-500 text-sm">
+              Latest updates from your workspace
             </p>
+
           </div>
 
-          <button
+          <Link
+            to="/tasks"
             className="
               flex
               items-center
               gap-2
-              text-[var(--primary)]
+              text-[#57BA98]
               font-semibold
-              text-sm
             "
           >
             View All
 
             <FaArrowRight />
-          </button>
+
+          </Link>
+
         </div>
 
-        <div className="space-y-3">
+        <div className="space-y-4">
+
           {recentTasks.length === 0 ? (
+
             <div
               className="
-                py-12
+                py-16
                 rounded-2xl
                 bg-[var(--background)]
                 text-center
@@ -182,58 +254,73 @@ function Dashboard() {
               "
             >
               No recent tasks available.
+
             </div>
+
           ) : (
+
             recentTasks.map((task) => (
+
               <motion.div
                 key={task.id}
                 whileHover={{
-                  scale: 1.01,
+                  y: -2,
                 }}
                 className="
-                  flex
-                  flex-col
-                  md:flex-row
-                  md:justify-between
-                  md:items-center
-                  gap-3
-                  rounded-xl
+                  p-5
+                  rounded-2xl
                   border
                   border-[var(--border)]
-                  p-4
-                  hover:bg-[var(--accent)]
+                  flex
+                  justify-between
+                  items-center
+                  hover:shadow-md
                   transition-all
                 "
               >
+
                 <div>
-                  <h3 className="font-semibold">
+
+                  <h3 className="font-semibold text-lg">
                     {task.title}
                   </h3>
 
-                  <p className="text-sm text-gray-500 mt-1">
+                  <p className="text-gray-500 mt-1">
                     {task.description}
                   </p>
+
                 </div>
 
                 <span
-                  className="
-                    px-3
+                  className={`
+                    px-4
                     py-2
                     rounded-full
-                    bg-[var(--accent)]
-                    text-[var(--primary)]
-                    text-xs
+                    text-sm
                     font-semibold
-                    w-fit
-                  "
+
+                    ${
+                      task.status === "Completed"
+                        ? "bg-green-100 text-green-600"
+                        : task.status === "Pending"
+                        ? "bg-orange-100 text-orange-600"
+                        : "bg-blue-100 text-blue-600"
+                    }
+                  `}
                 >
                   {task.status}
                 </span>
+
               </motion.div>
+
             ))
+
           )}
+
         </div>
+
       </section>
+
     </div>
   );
 }

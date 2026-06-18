@@ -3,6 +3,7 @@ import {
   FaPlus,
   FaSearch,
   FaSyncAlt,
+  FaTasks,
 } from "react-icons/fa";
 import { motion } from "framer-motion";
 
@@ -21,7 +22,6 @@ function Tasks() {
   const [loading, setLoading] = useState(true);
 
   const [search, setSearch] = useState("");
-
   const [statusFilter, setStatusFilter] =
     useState("All");
 
@@ -36,7 +36,6 @@ function Tasks() {
       setLoading(true);
 
       const data = await getTasks();
-
       setTasks(data);
     } catch (error) {
       console.log(error);
@@ -55,7 +54,6 @@ function Tasks() {
     await createTask(formData);
 
     setOpenModal(false);
-
     loadTasks();
   };
 
@@ -68,7 +66,6 @@ function Tasks() {
     );
 
     setOpenModal(false);
-
     setSelectedTask(null);
 
     loadTasks();
@@ -81,11 +78,11 @@ function Tasks() {
       !window.confirm(
         "Delete this task?"
       )
-    )
+    ) {
       return;
+    }
 
     await deleteTask(id);
-
     loadTasks();
   };
 
@@ -94,14 +91,10 @@ function Tasks() {
       const matchesSearch =
         task.title
           .toLowerCase()
-          .includes(
-            search.toLowerCase()
-          ) ||
+          .includes(search.toLowerCase()) ||
         task.description
           ?.toLowerCase()
-          .includes(
-            search.toLowerCase()
-          );
+          .includes(search.toLowerCase());
 
       const matchesStatus =
         statusFilter === "All" ||
@@ -115,76 +108,98 @@ function Tasks() {
   }, [tasks, search, statusFilter]);
 
   return (
-    <div className="space-y-10">
-      {/* Header */}
-
-      <div
+    <div className="space-y-8">
+      {/* Hero */}
+      <motion.section
+        initial={{
+          opacity: 0,
+          y: 15,
+        }}
+        animate={{
+          opacity: 1,
+          y: 0,
+        }}
         className="
-          flex
-          flex-col
-          lg:flex-row
-          justify-between
-          lg:items-center
-          gap-6
+          rounded-[34px]
+          bg-gradient-to-r
+          from-[#57BA98]
+          to-[#65CCB8]
+          p-8
+          text-white
+          shadow-xl
+          lg:p-10
         "
       >
-        <div>
-          <h1 className="text-4xl lg:text-5xl font-bold">
-            My Tasks
-          </h1>
-
-          <p
-            className="
-              mt-2
-              text-lg
-              text-[var(--text-secondary)]
-            "
-          >
-            Manage your daily work
-            efficiently.
-          </p>
-        </div>
-
-        <button
-          onClick={() => {
-            setSelectedTask(null);
-            setOpenModal(true);
-          }}
+        <div
           className="
-            px-7
-            py-4
-            rounded-2xl
-            bg-[var(--primary)]
-            hover:bg-[var(--primary-hover)]
-            text-white
-            font-semibold
-            shadow-lg
             flex
+            flex-wrap
             items-center
-            gap-3
-            transition-all
+            justify-between
+            gap-5
           "
         >
-          <FaPlus />
+          <div>
+            <h1 className="text-4xl font-bold">
+              My Tasks
+            </h1>
 
-          Add New Task
-        </button>
-      </div>
+            <p className="mt-3 opacity-90">
+              Manage all your projects and
+              daily work in one place.
+            </p>
 
-      {/* Search Panel */}
+            <div
+              className="
+                mt-5
+                inline-flex
+                items-center
+                gap-2
+                rounded-full
+                bg-white/20
+                px-4
+                py-2
+              "
+            >
+              <FaTasks />
+              {tasks.length} Tasks
+            </div>
+          </div>
 
+          <button
+            onClick={() => {
+              setSelectedTask(null);
+              setOpenModal(true);
+            }}
+            className="
+              flex
+              items-center
+              gap-2
+              rounded-2xl
+              bg-white
+              px-6
+              py-3
+              font-semibold
+              text-[#57BA98]
+            "
+          >
+            <FaPlus />
+            New Task
+          </button>
+        </div>
+      </motion.section>
+
+      {/* Filters */}
       <section
         className="
-          bg-white
-          rounded-[28px]
-          border
-          border-[var(--border)]
-          shadow-md
-          p-6
           flex
           flex-col
+          gap-4
+          rounded-[30px]
+          bg-white
+          p-6
+          shadow-lg
           lg:flex-row
-          gap-5
         "
       >
         <div className="relative flex-1">
@@ -208,15 +223,13 @@ function Tasks() {
               )
             }
             className="
-              w-full
               h-12
-              pl-12
+              w-full
               rounded-2xl
               border
-              border-[var(--border)]
-              bg-[var(--background)]
-              focus:ring-4
-              focus:ring-[var(--accent)]
+              border-[#EEF2F4]
+              bg-[#F8FAFC]
+              pl-12
               outline-none
             "
           />
@@ -231,10 +244,10 @@ function Tasks() {
           }
           className="
             h-12
-            px-5
             rounded-2xl
             border
-            border-[var(--border)]
+            border-[#EEF2F4]
+            px-5
           "
         >
           <option>All</option>
@@ -246,25 +259,23 @@ function Tasks() {
         <button
           onClick={loadTasks}
           className="
-            h-12
-            px-6
-            rounded-2xl
-            bg-[var(--accent)]
-            text-[var(--primary)]
-            font-semibold
             flex
+            h-12
             items-center
             gap-2
+            rounded-2xl
+            bg-[#EEFDF8]
+            px-6
+            font-semibold
+            text-[#57BA98]
           "
         >
           <FaSyncAlt />
-
           Refresh
         </button>
       </section>
 
-      {/* Tasks */}
-
+      {/* Task Grid */}
       {loading ? (
         <div className="py-24 text-center">
           Loading...
@@ -272,22 +283,20 @@ function Tasks() {
       ) : filteredTasks.length === 0 ? (
         <div
           className="
+            rounded-[30px]
             bg-white
-            rounded-[28px]
-            border
-            border-[var(--border)]
             py-24
             text-center
-            shadow-md
+            shadow-lg
           "
         >
           <h2 className="text-3xl font-bold">
-            No Tasks Found
+            No Tasks Yet
           </h2>
 
           <p className="mt-3 text-gray-500">
-            Create your first task to
-            get started.
+            Create your first task to get
+            started.
           </p>
         </div>
       ) : (
@@ -296,9 +305,9 @@ function Tasks() {
           className="
             grid
             grid-cols-1
+            gap-7
             md:grid-cols-2
             xl:grid-cols-3
-            gap-7
           "
         >
           {filteredTasks.map((task) => (

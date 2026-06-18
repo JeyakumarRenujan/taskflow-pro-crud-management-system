@@ -9,8 +9,8 @@ function StatCard({
   return (
     <motion.div
       whileHover={{
-        y: -5,
-        scale: 1.01,
+        y: -6,
+        scale: 1.02,
       }}
       transition={{
         duration: 0.25,
@@ -18,38 +18,22 @@ function StatCard({
       className="
         relative
         overflow-hidden
-        bg-white
-        rounded-3xl
-        p-5
-        shadow-md
+        rounded-[30px]
         border
-        border-[var(--border)]
+        border-[#EEF2F4]
+        bg-white
+        p-7
+        shadow-lg
       "
     >
-      {/* Left Accent */}
-
+      {/* Decorative Circle */}
       <div
         className="
           absolute
-          left-0
-          top-0
-          w-1.5
-          h-full
-        "
-        style={{
-          background: color,
-        }}
-      />
-
-      {/* Background Circle */}
-
-      <div
-        className="
-          absolute
-          -right-8
-          -top-8
-          w-24
-          h-24
+          -top-10
+          -right-10
+          h-32
+          w-32
           rounded-full
           opacity-10
         "
@@ -58,24 +42,30 @@ function StatCard({
         }}
       />
 
-      <div className="flex justify-between items-start">
+      {/* Top Section */}
+      <div className="flex items-start justify-between">
         <div>
-          <p
+          <span
             className="
-              text-xs
+              inline-block
+              rounded-full
+              bg-[#F5F7F8]
+              px-3
+              py-1
+              text-[10px]
+              font-semibold
               uppercase
               tracking-wider
-              font-semibold
-              text-[var(--text-secondary)]
+              text-gray-500
             "
           >
             {title}
-          </p>
+          </span>
 
           <h2
             className="
-              mt-3
-              text-4xl
+              mt-5
+              text-5xl
               font-bold
               text-[var(--text-primary)]
             "
@@ -86,36 +76,38 @@ function StatCard({
 
         <div
           className="
-            w-14
-            h-14
-            rounded-2xl
             flex
+            h-16
+            w-16
             items-center
             justify-center
-            shrink-0
+            rounded-3xl
+            shadow-sm
           "
           style={{
             background: `${color}20`,
             color,
           }}
         >
-          <span className="text-2xl">
+          <span className="text-3xl">
             {icon}
           </span>
         </div>
       </div>
 
-      <div
-        className="
-          mt-5
-          h-1.5
-          rounded-full
-          opacity-90
-        "
-        style={{
-          background: color,
-        }}
-      />
+      {/* Bottom Section */}
+      <div className="mt-8 flex items-center gap-2">
+        <div
+          className="h-2 w-2 rounded-full"
+          style={{
+            background: color,
+          }}
+        />
+
+        <span className="text-sm text-gray-500">
+          Updated Today
+        </span>
+      </div>
     </motion.div>
   );
 }
