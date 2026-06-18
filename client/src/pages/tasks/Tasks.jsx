@@ -1,5 +1,10 @@
 import { useEffect, useMemo, useState } from "react";
-import { FaPlus, FaSearch, FaSyncAlt } from "react-icons/fa";
+import {
+  FaPlus,
+  FaSearch,
+  FaSyncAlt,
+} from "react-icons/fa";
+import { motion } from "framer-motion";
 
 import {
   getTasks,
@@ -16,10 +21,14 @@ function Tasks() {
   const [loading, setLoading] = useState(true);
 
   const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState("All");
+  const [statusFilter, setStatusFilter] =
+    useState("All");
 
-  const [openModal, setOpenModal] = useState(false);
-  const [selectedTask, setSelectedTask] = useState(null);
+  const [openModal, setOpenModal] =
+    useState(false);
+
+  const [selectedTask, setSelectedTask] =
+    useState(null);
 
   const loadTasks = async () => {
     try {
@@ -39,49 +48,44 @@ function Tasks() {
     loadTasks();
   }, []);
 
-  const handleCreateTask = async (formData) => {
-    try {
-      await createTask(formData);
+  const handleCreateTask = async (
+    formData
+  ) => {
+    await createTask(formData);
 
-      setOpenModal(false);
-      setSelectedTask(null);
+    setOpenModal(false);
 
-      await loadTasks();
-    } catch (error) {
-      console.log(error);
-    }
+    loadTasks();
   };
 
-  const handleEditTask = async (formData) => {
-    try {
-      await updateTask(
-        selectedTask.id,
-        formData
-      );
-
-      setOpenModal(false);
-      setSelectedTask(null);
-
-      await loadTasks();
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
-  const handleDeleteTask = async (id) => {
-    const confirmDelete = window.confirm(
-      "Delete this task?"
+  const handleEditTask = async (
+    formData
+  ) => {
+    await updateTask(
+      selectedTask.id,
+      formData
     );
 
-    if (!confirmDelete) return;
+    setOpenModal(false);
 
-    try {
-      await deleteTask(id);
+    setSelectedTask(null);
 
-      await loadTasks();
-    } catch (error) {
-      console.log(error);
-    }
+    loadTasks();
+  };
+
+  const handleDeleteTask = async (
+    id
+  ) => {
+    if (
+      !window.confirm(
+        "Delete this task?"
+      )
+    )
+      return;
+
+    await deleteTask(id);
+
+    loadTasks();
   };
 
   const filteredTasks = useMemo(() => {
@@ -89,21 +93,30 @@ function Tasks() {
       const matchesSearch =
         task.title
           .toLowerCase()
-          .includes(search.toLowerCase()) ||
+          .includes(
+            search.toLowerCase()
+          ) ||
         task.description
           ?.toLowerCase()
-          .includes(search.toLowerCase());
+          .includes(
+            search.toLowerCase()
+          );
 
       const matchesStatus =
         statusFilter === "All" ||
         task.status === statusFilter;
 
-      return matchesSearch && matchesStatus;
+      return (
+        matchesSearch &&
+        matchesStatus
+      );
     });
   }, [tasks, search, statusFilter]);
 
   return (
-    <div>
+    <div className="space-y-8">
+      {/* Header */}
+
       <div
         className="
           flex
@@ -120,7 +133,8 @@ function Tasks() {
           </h1>
 
           <p className="text-gray-500 mt-2">
-            Manage all your daily tasks
+            Organize and manage your
+            daily work efficiently.
           </p>
         </div>
 
@@ -133,27 +147,34 @@ function Tasks() {
             flex
             items-center
             gap-2
-            bg-indigo-600
-            hover:bg-indigo-700
+            bg-[var(--primary)]
+            hover:bg-[var(--primary-hover)]
             text-white
-            px-5
+            px-6
             py-3
-            rounded-xl
+            rounded-2xl
+            shadow-lg
             transition-all
           "
         >
           <FaPlus />
+
           Add Task
         </button>
       </div>
 
+      {/* Search */}
+
       <div
         className="
+          bg-white
+          rounded-3xl
+          p-5
+          shadow-lg
           flex
           flex-col
           lg:flex-row
           gap-4
-          mt-8
         "
       >
         <div className="relative flex-1">
@@ -161,7 +182,8 @@ function Tasks() {
             className="
               absolute
               left-4
-              top-4
+              top-1/2
+              -translate-y-1/2
               text-gray-400
             "
           />
@@ -171,16 +193,21 @@ function Tasks() {
             placeholder="Search tasks..."
             value={search}
             onChange={(e) =>
-              setSearch(e.target.value)
+              setSearch(
+                e.target.value
+              )
             }
             className="
               w-full
               pl-12
               pr-4
               py-3
-              rounded-xl
+              rounded-2xl
               border
+              border-[var(--border)]
               outline-none
+              focus:ring-4
+              focus:ring-[var(--accent)]
             "
           />
         </div>
@@ -188,13 +215,16 @@ function Tasks() {
         <select
           value={statusFilter}
           onChange={(e) =>
-            setStatusFilter(e.target.value)
+            setStatusFilter(
+              e.target.value
+            )
           }
           className="
-            px-4
+            px-5
             py-3
-            rounded-xl
+            rounded-2xl
             border
+            border-[var(--border)]
           "
         >
           <option>All</option>
@@ -206,57 +236,74 @@ function Tasks() {
         <button
           onClick={loadTasks}
           className="
+            px-5
+            py-3
+            rounded-2xl
+            bg-[var(--accent)]
+            text-[var(--primary)]
             flex
             items-center
             gap-2
-            px-5
-            py-3
-            rounded-xl
-            border
           "
         >
           <FaSyncAlt />
+
           Refresh
         </button>
       </div>
 
+      {/* Content */}
+
       {loading ? (
-        <div className="text-center mt-16">
+        <div className="text-center py-20">
           Loading Tasks...
         </div>
       ) : filteredTasks.length === 0 ? (
-        <div className="text-center mt-20">
-          <h2 className="text-2xl font-semibold">
-            No Tasks Found
+        <div
+          className="
+            bg-white
+            rounded-3xl
+            shadow-lg
+            py-20
+            text-center
+          "
+        >
+          <h2 className="text-3xl font-bold">
+            No Tasks Yet
           </h2>
 
-          <p className="text-gray-500 mt-2">
-            Create your first task.
+          <p className="text-gray-500 mt-3">
+            Click "Add Task" to create
+            your first task.
           </p>
         </div>
       ) : (
-        <div
+        <motion.div
+          layout
           className="
             grid
             grid-cols-1
             md:grid-cols-2
             xl:grid-cols-3
             gap-6
-            mt-8
           "
         >
-          {filteredTasks.map((task) => (
-            <TaskCard
-              key={task.id}
-              task={task}
-              onEdit={(task) => {
-                setSelectedTask(task);
-                setOpenModal(true);
-              }}
-              onDelete={handleDeleteTask}
-            />
-          ))}
-        </div>
+          {filteredTasks.map(
+            (task) => (
+              <TaskCard
+                key={task.id}
+                task={task}
+                onEdit={(task) => {
+                  setSelectedTask(task);
+                  setOpenModal(true);
+                }}
+                onDelete={
+                  handleDeleteTask
+                }
+              />
+            )
+          )}
+        </motion.div>
       )}
 
       <TaskModal

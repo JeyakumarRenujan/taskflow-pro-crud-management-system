@@ -1,39 +1,98 @@
+import { useState } from "react";
+import {
+  motion,
+  AnimatePresence,
+} from "framer-motion";
+import { Outlet } from "react-router-dom";
+
 import Sidebar from "../components/layout/Sidebar";
 import Navbar from "../components/layout/Navbar";
 
-import { Outlet } from "react-router-dom";
-
 function MainLayout() {
+  const [sidebarOpen, setSidebarOpen] =
+    useState(false);
 
-    return (
+  return (
+    <div
+      className="
+        min-h-screen
+        bg-[var(--background)]
+        flex
+      "
+    >
+      {/* Desktop Sidebar */}
 
-        <div className="flex">
+      <div className="hidden lg:block">
+        <Sidebar />
+      </div>
 
-            <Sidebar />
+      {/* Mobile Sidebar */}
 
-            <main
-                className="
-                flex-1
-                ml-64
-                bg-gray-50
-                min-h-screen
-                "
+      <AnimatePresence>
+        {sidebarOpen && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            onClick={() =>
+              setSidebarOpen(false)
+            }
+            className="
+              fixed
+              inset-0
+              bg-black/40
+              z-50
+              lg:hidden
+            "
+          >
+            <motion.div
+              initial={{ x: -300 }}
+              animate={{ x: 0 }}
+              exit={{ x: -300 }}
+              transition={{
+                duration: 0.3,
+              }}
+              onClick={(e) =>
+                e.stopPropagation()
+              }
+              className="
+                h-full
+                w-72
+              "
             >
+              <Sidebar />
+            </motion.div>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
-                <Navbar />
+      {/* Main Content */}
 
-                <div className="p-8">
+      <main
+        className="
+          flex-1
+          lg:ml-72
+          min-h-screen
+        "
+      >
+        <Navbar
+          toggleSidebar={() =>
+            setSidebarOpen(!sidebarOpen)
+          }
+        />
 
-                    <Outlet />
-
-                </div>
-
-            </main>
-
+        <div
+          className="
+            p-6
+            md:p-8
+            xl:p-10
+          "
+        >
+          <Outlet />
         </div>
-
-    );
-
+      </main>
+    </div>
+  );
 }
 
 export default MainLayout;

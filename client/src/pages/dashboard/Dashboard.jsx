@@ -1,14 +1,14 @@
 import { useEffect, useState } from "react";
-
 import {
   FaTasks,
   FaClock,
   FaSpinner,
   FaCheckCircle,
+  FaArrowRight,
 } from "react-icons/fa";
+import { motion } from "framer-motion";
 
 import { getTasks } from "../../services/taskService";
-
 import StatCard from "../../components/cards/StatCard";
 
 function Dashboard() {
@@ -45,38 +45,54 @@ function Dashboard() {
   const recentTasks = tasks.slice(0, 5);
 
   return (
-    <div>
+    <div className="space-y-8">
+      {/* Hero */}
 
-      <div className="mb-8">
-
+      <motion.div
+        initial={{
+          opacity: 0,
+          y: 15,
+        }}
+        animate={{
+          opacity: 1,
+          y: 0,
+        }}
+        className="
+          rounded-3xl
+          bg-gradient-to-r
+          from-[#57BA98]
+          to-[#65CCB8]
+          p-8
+          text-white
+          shadow-xl
+        "
+      >
         <h1 className="text-4xl font-bold">
-
-          Good Morning 👋
-
+          Welcome Back 👋
         </h1>
 
-        <p className="text-gray-500 mt-2">
-
-          Welcome back to TaskFlow Pro
-
+        <p className="mt-3 text-lg opacity-90">
+          Stay productive and keep your work
+          organized with TaskFlow Pro.
         </p>
+      </motion.div>
 
-      </div>
+      {/* Statistics */}
 
       <div
         className="
-        grid
-        grid-cols-1
-        md:grid-cols-2
-        xl:grid-cols-4
-        gap-6
+          grid
+          grid-cols-1
+          md:grid-cols-2
+          xl:grid-cols-4
+          gap-6
         "
       >
         <StatCard
           title="Total Tasks"
           value={total}
           icon={<FaTasks />}
-          color="#6366F1"
+          color="#57BA98"
         />
 
         <StatCard
@@ -101,70 +117,94 @@ function Dashboard() {
         />
       </div>
 
-      <div className="mt-10">
+      {/* Recent Tasks */}
 
-        <h2 className="text-2xl font-bold mb-5">
+      <div
+        className="
+          bg-white
+          rounded-3xl
+          shadow-lg
+          p-7
+        "
+      >
+        <div className="flex justify-between items-center mb-6">
+          <h2 className="text-2xl font-bold">
+            Recent Tasks
+          </h2>
 
-          Recent Tasks
+          <button
+            className="
+              flex
+              items-center
+              gap-2
+              text-[var(--primary)]
+              font-semibold
+            "
+          >
+            View All
 
-        </h2>
+            <FaArrowRight />
+          </button>
+        </div>
 
-        <div className="grid gap-4">
-
+        <div className="space-y-4">
           {recentTasks.length === 0 ? (
-
-            <div className="bg-white rounded-2xl p-6 shadow">
-
+            <div
+              className="
+                py-12
+                text-center
+                text-gray-500
+              "
+            >
               No tasks available.
-
             </div>
-
           ) : (
-
             recentTasks.map((task) => (
-
-              <div
+              <motion.div
+                whileHover={{
+                  scale: 1.01,
+                }}
                 key={task.id}
                 className="
-                bg-white
-                rounded-xl
-                shadow-sm
-                p-5
-                flex
-                justify-between
-                items-center
+                  flex
+                  justify-between
+                  items-center
+                  rounded-2xl
+                  border
+                  border-[var(--border)]
+                  p-5
+                  hover:bg-[var(--accent)]
+                  transition-all
                 "
               >
                 <div>
-
-                  <h3 className="font-semibold">
-
+                  <h3 className="font-semibold text-lg">
                     {task.title}
-
                   </h3>
 
-                  <p className="text-gray-500 text-sm">
-
+                  <p className="text-sm text-gray-500 mt-1">
                     {task.description}
-
                   </p>
-
                 </div>
 
-                <span className="text-sm">
-
+                <span
+                  className="
+                    px-4
+                    py-2
+                    rounded-full
+                    text-sm
+                    font-medium
+                    bg-[var(--accent)]
+                    text-[var(--primary)]
+                  "
+                >
                   {task.status}
-
                 </span>
-
-              </div>
+              </motion.div>
             ))
           )}
-
         </div>
-
       </div>
-
     </div>
   );
 }

@@ -8,33 +8,96 @@ function StatCard({
 }) {
   return (
     <motion.div
-      whileHover={{ y: -5 }}
+      whileHover={{
+        y: -6,
+        scale: 1.02,
+      }}
+      transition={{
+        duration: 0.25,
+      }}
       className="
+        relative
+        overflow-hidden
         bg-white
-        rounded-2xl
-        shadow-md
+        rounded-3xl
         p-6
-        flex
-        justify-between
-        items-center
+        shadow-lg
+        border
+        border-[var(--border)]
       "
     >
-      <div>
-        <p className="text-gray-500">
-          {title}
-        </p>
+      {/* Decorative Circle */}
 
-        <h2 className="text-4xl font-bold mt-2">
-          {value}
-        </h2>
+      <div
+        className="
+          absolute
+          -right-8
+          -top-8
+          w-24
+          h-24
+          rounded-full
+          opacity-10
+        "
+        style={{
+          background: color,
+        }}
+      />
+
+      <div className="flex justify-between items-start">
+        <div>
+          <p
+            className="
+              text-sm
+              font-medium
+              text-[var(--text-secondary)]
+            "
+          >
+            {title}
+          </p>
+
+          <h2
+            className="
+              mt-3
+              text-4xl
+              font-bold
+              text-[var(--text-primary)]
+            "
+          >
+            {value}
+          </h2>
+        </div>
+
+        <div
+          className="
+            w-14
+            h-14
+            rounded-2xl
+            flex
+            items-center
+            justify-center
+            shadow-sm
+          "
+          style={{
+            background: `${color}20`,
+            color: color,
+          }}
+        >
+          <span className="text-2xl">
+            {icon}
+          </span>
+        </div>
       </div>
 
       <div
-        className="text-5xl"
-        style={{ color }}
-      >
-        {icon}
-      </div>
+        className="
+          mt-6
+          h-1
+          rounded-full
+        "
+        style={{
+          background: color,
+        }}
+      />
     </motion.div>
   );
 }
