@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { useNavigate, Link } from "react-router-dom";
+import {
+  useNavigate,
+  Link,
+} from "react-router-dom";
 import { motion } from "framer-motion";
 
 import Button from "../../components/ui/Button";
@@ -14,10 +17,14 @@ function Login() {
 
   const { login } = useAuth();
 
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [email, setEmail] =
+    useState("");
 
-  const [loading, setLoading] = useState(false);
+  const [password, setPassword] =
+    useState("");
+
+  const [loading, setLoading] =
+    useState(false);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -25,13 +32,14 @@ function Login() {
     try {
       setLoading(true);
 
-      const response = await api.post(
-        "/auth/login",
-        {
-          email,
-          password,
-        }
-      );
+      const response =
+        await api.post(
+          "/auth/login",
+          {
+            email,
+            password,
+          }
+        );
 
       login(
         response.data.user,
@@ -58,7 +66,7 @@ function Login() {
         lg:grid-cols-2
       "
     >
-      {/* Left Side */}
+      {/* Left */}
 
       <div
         className="
@@ -70,20 +78,18 @@ function Login() {
           bg-gradient-to-br
           from-[#57BA98]
           to-[#65CCB8]
-          p-12
-          text-white
+          p-16
           relative
           overflow-hidden
+          text-white
         "
       >
-        <div className="max-w-md z-10">
-          <h1 className="text-6xl font-extrabold leading-tight">
-            TaskFlow
-            <br />
-            Pro
+        <div className="max-w-lg z-10">
+          <h1 className="text-7xl font-extrabold leading-tight">
+            TaskFlow Pro
           </h1>
 
-          <p className="mt-6 text-xl leading-relaxed">
+          <p className="mt-8 text-2xl leading-relaxed">
             Organize your projects,
             collaborate with your team,
             and stay productive every day.
@@ -93,20 +99,20 @@ function Login() {
         <div
           className="
             absolute
-            w-72
-            h-72
+            w-80
+            h-80
             rounded-full
             bg-white/10
-            -top-16
-            -right-16
+            -top-10
+            -right-10
           "
         />
 
         <div
           className="
             absolute
-            w-56
-            h-56
+            w-60
+            h-60
             rounded-full
             bg-white/10
             bottom-10
@@ -115,58 +121,66 @@ function Login() {
         />
       </div>
 
-      {/* Right Side */}
+      {/* Right */}
 
       <div
         className="
           flex
           justify-center
           items-center
-          p-6
+          px-8
         "
       >
         <motion.div
           initial={{
             opacity: 0,
-            y: 20,
+            y: 25,
           }}
           animate={{
             opacity: 1,
             y: 0,
           }}
           transition={{
-            duration: 0.5,
+            duration: 0.4,
           }}
           className="
             w-full
-            max-w-lg
-            bg-white/90
-            backdrop-blur-md
-            rounded-3xl
+            max-w-xl
+            bg-white
+            rounded-[32px]
             shadow-2xl
-            p-10
+            p-12
           "
         >
           <Logo />
 
-          <h2
-            className="
-              text-4xl
-              font-bold
-              mt-8
-              text-[var(--text-primary)]
-            "
-          >
-            Welcome Back 👋
-          </h2>
+          <div className="mt-10">
+            <h2
+              className="
+                text-5xl
+                font-bold
+                text-[var(--text-primary)]
+              "
+            >
+              Welcome Back 
+            </h2>
 
-          <p className="text-gray-500 mt-2 mb-8">
-            Sign in to continue managing your tasks.
-          </p>
+            <p
+              className="
+                mt-3
+                text-lg
+                text-[var(--text-secondary)]
+              "
+            >
+              Sign in to access your
+              workspace and continue
+              managing your tasks.
+            </p>
+          </div>
 
           <form
             onSubmit={handleLogin}
-            className="space-y-5"
+            className="space-y-6 mt-10"
           >
             <Input
               label="Email"
@@ -175,7 +189,9 @@ function Login() {
               placeholder="Enter your email"
               value={email}
               onChange={(e) =>
-                setEmail(e.target.value)
+                setEmail(
+                  e.target.value
+                )
               }
             />
 
@@ -186,7 +202,9 @@ function Login() {
               placeholder="Enter your password"
               value={password}
               onChange={(e) =>
-                setPassword(e.target.value)
+                setPassword(
+                  e.target.value
+                )
               }
             />
 
@@ -198,13 +216,20 @@ function Login() {
             </Button>
           </form>
 
-          <p className="text-center mt-8 text-gray-600">
+          <p
+            className="
+              text-center
+              mt-10
+              text-gray-500
+            "
+          >
             Don't have an account?{" "}
+
             <Link
               to="/register"
               className="
-                text-[#57BA98]
                 font-semibold
+                text-[#57BA98]
                 hover:underline
               "
             >

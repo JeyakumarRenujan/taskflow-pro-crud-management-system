@@ -1,40 +1,55 @@
 :root {
+  /* =========================
+     BRAND COLORS
+  ========================= */
 
-  /* Brand Colors */
-
-  --primary: #6366F1;
-  --primary-hover: #4F46E5;
-
-  --secondary: #8B5CF6;
+  --primary: #57BA98;
+  --primary-hover: #459F83;
+  --secondary: #65CCB8;
 
   --success: #22C55E;
   --warning: #F59E0B;
   --danger: #EF4444;
 
-  /* Background */
+  /* =========================
+     BACKGROUND
+  ========================= */
 
-  --background: #F8FAFC;
+  --background: #F7FCFA;
   --surface: #FFFFFF;
+  --accent: #E8F8F3;
 
-  /* Text */
+  /* =========================
+     TEXT
+  ========================= */
 
-  --text-primary: #0F172A;
-  --text-secondary: #64748B;
+  --text-primary: #1F2937;
+  --text-secondary: #6B7280;
 
-  /* Border */
+  /* =========================
+     BORDER
+  ========================= */
 
-  --border: #E2E8F0;
+  --border: #DCEFE8;
 
-  /* Radius */
+  /* =========================
+     RADIUS
+  ========================= */
 
-  --radius-sm: 8px;
-  --radius-md: 12px;
-  --radius-lg: 16px;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
 
-  /* Shadow */
+  /* =========================
+     SHADOW
+  ========================= */
 
   --shadow:
-
-  0 10px 30px rgba(15,23,42,0.08);
-
+    0 12px 35px
+    rgba(
+      87,
+      186,
+      152,
+      0.12
+    );
 }

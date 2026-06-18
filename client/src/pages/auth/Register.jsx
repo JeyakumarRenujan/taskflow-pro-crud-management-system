@@ -1,5 +1,8 @@
 import { useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {
+  Link,
+  useNavigate,
+} from "react-router-dom";
 import { motion } from "framer-motion";
 
 import Logo from "../../components/common/Logo";
@@ -17,12 +20,14 @@ function Register() {
     password: "",
   });
 
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] =
+    useState(false);
 
   const handleChange = (e) => {
     setForm({
       ...form,
-      [e.target.name]: e.target.value,
+      [e.target.name]:
+        e.target.value,
     });
   };
 
@@ -32,9 +37,14 @@ function Register() {
     try {
       setLoading(true);
 
-      await api.post("/auth/register", form);
+      await api.post(
+        "/auth/register",
+        form
+      );
 
-      alert("Registration successful!");
+      alert(
+        "Registration successful!"
+      );
 
       navigate("/login");
     } catch (error) {
@@ -56,7 +66,7 @@ function Register() {
         lg:grid-cols-2
       "
     >
-      {/* Left Side */}
+      {/* Left */}
 
       <div
         className="
@@ -68,43 +78,43 @@ function Register() {
           bg-gradient-to-br
           from-[#57BA98]
           to-[#65CCB8]
-          p-12
-          text-white
+          p-16
           relative
           overflow-hidden
+          text-white
         "
       >
-        <div className="max-w-md z-10">
-          <h1 className="text-6xl font-extrabold leading-tight">
+        <div className="max-w-lg z-10">
+          <h1 className="text-7xl font-extrabold leading-tight">
             Join
             <br />
             TaskFlow
           </h1>
 
-          <p className="mt-6 text-xl leading-relaxed">
-            Create your account and start
-            organizing your projects and
-            daily work with ease.
+          <p className="mt-8 text-2xl leading-relaxed">
+            Create your account and
+            start organizing your
+            projects with confidence.
           </p>
         </div>
 
         <div
           className="
             absolute
-            w-72
-            h-72
+            w-80
+            h-80
             rounded-full
             bg-white/10
-            -top-16
-            -right-16
+            -top-10
+            -right-10
           "
         />
 
         <div
           className="
             absolute
-            w-56
-            h-56
+            w-60
+            h-60
             rounded-full
             bg-white/10
             bottom-10
@@ -113,64 +123,71 @@ function Register() {
         />
       </div>
 
-      {/* Right Side */}
+      {/* Right */}
 
       <div
         className="
           flex
           justify-center
           items-center
-          p-6
+          px-8
         "
       >
         <motion.div
           initial={{
             opacity: 0,
-            y: 20,
+            y: 25,
           }}
           animate={{
             opacity: 1,
             y: 0,
           }}
           transition={{
-            duration: 0.5,
+            duration: 0.4,
           }}
           className="
             w-full
-            max-w-lg
-            bg-white/90
-            backdrop-blur-md
-            rounded-3xl
+            max-w-xl
+            bg-white
+            rounded-[32px]
             shadow-2xl
-            p-10
+            p-12
           "
         >
           <Logo />
 
-          <h2
-            className="
-              text-4xl
-              font-bold
-              mt-8
-              text-[var(--text-primary)]
-            "
-          >
-            Create Account
-          </h2>
+          <div className="mt-10">
+            <h2
+              className="
+                text-5xl
+                font-bold
+                text-[var(--text-primary)]
+              "
+            >
+              Create Account
+            </h2>
 
-          <p className="text-gray-500 mt-2 mb-8">
-            Create your account to start
-            managing tasks efficiently.
-          </p>
+            <p
+              className="
+                mt-3
+                text-lg
+                text-[var(--text-secondary)]
+              "
+            >
+              Create your workspace and
+              start managing your tasks
+              more efficiently.
+            </p>
+          </div>
 
           <form
             onSubmit={handleRegister}
-            className="space-y-5"
+            className="space-y-6 mt-10"
           >
             <Input
               label="Full Name"
               name="name"
-              placeholder="Enter your name"
+              placeholder="Enter your full name"
               value={form.name}
               onChange={handleChange}
             />
@@ -188,7 +205,7 @@ function Register() {
               label="Password"
               name="password"
               type="password"
-              placeholder="Enter your password"
+              placeholder="Create a password"
               value={form.password}
               onChange={handleChange}
             />
@@ -201,8 +218,16 @@ function Register() {
             </Button>
           </form>
 
-          <p className="text-center mt-8 text-gray-600">
-            Already have an account?{" "}
+          <p
+            className="
+              text-center
+              mt-10
+              text-gray-500
+            "
+          >
+            Already have an
+            account?{" "}
+
             <Link
               to="/login"
               className="
