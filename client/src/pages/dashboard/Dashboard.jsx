@@ -1,20 +1,34 @@
-import MainLayout from "../../layouts/MainLayout";
-
 function Dashboard() {
 
-  return (
+    return (
 
-    <MainLayout>
+        <div>
 
-      <h1 className="text-4xl font-bold">
+            <h1
+                className="
+                text-4xl
+                font-bold
+                "
+            >
 
-        Welcome Back 👋
+                Good Morning 👋
 
-      </h1>
+            </h1>
 
-    </MainLayout>
+            <p
+                className="
+                text-gray-500
+                mt-2
+                "
+            >
 
-  );
+                Welcome back to TaskFlow Pro
+
+            </p>
+
+        </div>
+
+    );
 
 }
 
