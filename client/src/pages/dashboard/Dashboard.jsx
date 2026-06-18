@@ -1,102 +1,172 @@
+import { useEffect, useState } from "react";
+
 import {
-
-    FaTasks,
-
-    FaClock,
-
-    FaSpinner,
-
-    FaCheckCircle
-
+  FaTasks,
+  FaClock,
+  FaSpinner,
+  FaCheckCircle,
 } from "react-icons/fa";
+
+import { getTasks } from "../../services/taskService";
 
 import StatCard from "../../components/cards/StatCard";
 
 function Dashboard() {
+  const [tasks, setTasks] = useState([]);
 
-    return (
+  const loadTasks = async () => {
+    try {
+      const data = await getTasks();
 
-        <div>
+      setTasks(data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
-            <h1 className="text-4xl font-bold">
+  useEffect(() => {
+    loadTasks();
+  }, []);
 
-                Good Morning 👋
+  const total = tasks.length;
 
-            </h1>
+  const pending = tasks.filter(
+    (task) => task.status === "Pending"
+  ).length;
 
-            <p className="text-gray-500 mt-2">
+  const progress = tasks.filter(
+    (task) => task.status === "In Progress"
+  ).length;
 
-                Welcome back to TaskFlow Pro
+  const completed = tasks.filter(
+    (task) => task.status === "Completed"
+  ).length;
 
-            </p>
+  const recentTasks = tasks.slice(0, 5);
 
-            <div
+  return (
+    <div>
 
-                className="
-                grid
-                grid-cols-1
-                md:grid-cols-2
-                xl:grid-cols-4
-                gap-6
-                mt-8
-                "
+      <div className="mb-8">
 
-            >
+        <h1 className="text-4xl font-bold">
 
-                <StatCard
+          Good Morning 👋
 
-                    title="Total Tasks"
+        </h1>
 
-                    value="12"
+        <p className="text-gray-500 mt-2">
 
-                    icon={<FaTasks />}
+          Welcome back to TaskFlow Pro
 
-                    color="#6366F1"
+        </p>
 
-                />
+      </div>
 
-                <StatCard
+      <div
+        className="
+        grid
+        grid-cols-1
+        md:grid-cols-2
+        xl:grid-cols-4
+        gap-6
+        "
+      >
+        <StatCard
+          title="Total Tasks"
+          value={total}
+          icon={<FaTasks />}
+          color="#6366F1"
+        />
 
-                    title="Pending"
+        <StatCard
+          title="Pending"
+          value={pending}
+          icon={<FaClock />}
+          color="#F59E0B"
+        />
 
-                    value="5"
+        <StatCard
+          title="In Progress"
+          value={progress}
+          icon={<FaSpinner />}
+          color="#3B82F6"
+        />
 
-                    icon={<FaClock />}
+        <StatCard
+          title="Completed"
+          value={completed}
+          icon={<FaCheckCircle />}
+          color="#22C55E"
+        />
+      </div>
 
-                    color="#F59E0B"
+      <div className="mt-10">
 
-                />
+        <h2 className="text-2xl font-bold mb-5">
 
-                <StatCard
+          Recent Tasks
 
-                    title="In Progress"
+        </h2>
 
-                    value="4"
+        <div className="grid gap-4">
 
-                    icon={<FaSpinner />}
+          {recentTasks.length === 0 ? (
 
-                    color="#3B82F6"
+            <div className="bg-white rounded-2xl p-6 shadow">
 
-                />
-
-                <StatCard
-
-                    title="Completed"
-
-                    value="3"
-
-                    icon={<FaCheckCircle />}
-
-                    color="#22C55E"
-
-                />
+              No tasks available.
 
             </div>
 
+          ) : (
+
+            recentTasks.map((task) => (
+
+              <div
+                key={task.id}
+                className="
+                bg-white
+                rounded-xl
+                shadow-sm
+                p-5
+                flex
+                justify-between
+                items-center
+                "
+              >
+                <div>
+
+                  <h3 className="font-semibold">
+
+                    {task.title}
+
+                  </h3>
+
+                  <p className="text-gray-500 text-sm">
+
+                    {task.description}
+
+                  </p>
+
+                </div>
+
+                <span className="text-sm">
+
+                  {task.status}
+
+                </span>
+
+              </div>
+            ))
+          )}
+
         </div>
 
-    );
+      </div>
 
+    </div>
+  );
 }
 
 export default Dashboard;
