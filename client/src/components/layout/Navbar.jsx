@@ -63,7 +63,7 @@ function Navbar({ toggleSidebar }) {
               <FaSearch
                 className="
                   absolute
-                  left-6
+                  right-6
                   top-1/2
                   -translate-y-1/2
                   text-gray-400

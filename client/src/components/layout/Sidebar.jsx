@@ -81,7 +81,7 @@ function Sidebar() {
                 whileTap={{ scale: 0.98 }}
                 className={`
                   flex
-                  h-14
+                  h-16
                   items-center
                   gap-4
                   rounded-2xl

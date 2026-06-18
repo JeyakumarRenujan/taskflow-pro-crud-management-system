@@ -104,7 +104,7 @@ function Dashboard() {
                 mt-2
               "
             >
-              Welcome Back 👋
+              Welcome Back 
             </h1>
 
             <p
