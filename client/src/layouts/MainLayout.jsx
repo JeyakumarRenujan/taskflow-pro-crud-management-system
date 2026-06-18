@@ -13,54 +13,70 @@ function MainLayout() {
     useState(false);
 
   return (
-    <div
-      className="
-        min-h-screen
-        bg-[var(--background)]
-        flex
-      "
-    >
-      {/* Desktop Sidebar */}
+    <div className="min-h-screen bg-[#F5F7F9]">
 
-      <div
-        className="
-          hidden
-          lg:block
-          w-72
-          shrink-0
-        "
-      >
-        <div
-          className="
-            fixed
-            left-0
-            top-0
-            w-72
-            h-screen
-          "
-        >
-          <Sidebar />
+      {/* Desktop */}
+
+      <div className="hidden lg:flex">
+
+        {/* Sidebar */}
+
+        <div className="w-[280px] shrink-0 p-4">
+
+          <div
+            className="
+              fixed
+              top-4
+              left-4
+              bottom-4
+              w-[260px]
+              z-40
+            "
+          >
+            <Sidebar />
+          </div>
+
         </div>
+
+        {/* Main */}
+
+        <div className="flex-1 flex flex-col">
+
+          <Navbar
+            toggleSidebar={() =>
+              setSidebarOpen(!sidebarOpen)
+            }
+          />
+
+          <main
+            className="
+              px-8
+              pb-8
+              pt-2
+              flex-1
+            "
+          >
+            <Outlet />
+          </main>
+
+        </div>
+
       </div>
 
-      {/* Mobile Sidebar */}
+      {/* Mobile */}
 
       <AnimatePresence>
+
         {sidebarOpen && (
+
           <motion.div
-            initial={{
-              opacity: 0,
-            }}
-            animate={{
-              opacity: 1,
-            }}
-            exit={{
-              opacity: 0,
-            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             className="
               fixed
               inset-0
-              bg-black/50
+              bg-black/40
               z-50
               lg:hidden
             "
@@ -68,60 +84,46 @@ function MainLayout() {
               setSidebarOpen(false)
             }
           >
+
             <motion.div
-              initial={{
-                x: -300,
-              }}
-              animate={{
-                x: 0,
-              }}
-              exit={{
-                x: -300,
-              }}
+              initial={{ x: -280 }}
+              animate={{ x: 0 }}
+              exit={{ x: -280 }}
               transition={{
                 duration: 0.3,
               }}
-              className="
-                w-72
-                h-full
-              "
+              className="w-[260px] h-full"
               onClick={(e) =>
                 e.stopPropagation()
               }
             >
               <Sidebar />
             </motion.div>
+
           </motion.div>
+
         )}
+
       </AnimatePresence>
 
-      {/* Main Content */}
+      {/* Mobile Content */}
 
-      <div
-        className="
-          flex-1
-          min-h-screen
-          flex
-          flex-col
-        "
-      >
+      <div className="lg:hidden flex flex-col min-h-screen">
+
         <Navbar
           toggleSidebar={() =>
-            setSidebarOpen(
-              !sidebarOpen
-            )
+            setSidebarOpen(!sidebarOpen)
           }
         />
 
-        <main
-          className="
-            flex-1
-            p-8
-          "
-        >
+        <main className="p-4 flex-1">
+
           <Outlet />
+
         </main>
+
       </div>
+
     </div>
   );
 }

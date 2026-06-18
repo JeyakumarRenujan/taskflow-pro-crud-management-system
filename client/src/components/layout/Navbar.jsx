@@ -4,8 +4,8 @@ import {
   FaSearch,
   FaChevronDown,
 } from "react-icons/fa";
-import { motion } from "framer-motion";
 
+import { motion } from "framer-motion";
 import { useAuth } from "../../context/AuthContext";
 
 function Navbar({ toggleSidebar }) {
@@ -20,17 +20,18 @@ function Navbar({ toggleSidebar }) {
 
   return (
     <header className="sticky top-0 z-40 bg-transparent">
-      <div className="px-6 pt-6 pb-2 lg:px-8">
+      <div className="px-8 pt-7 pb-3">
         <div
           className="
-            h-16
             flex
             items-center
             justify-between
-            gap-6
+            gap-8
+            h-16
           "
         >
           {/* Mobile Menu */}
+
           <div className="lg:hidden">
             <button
               onClick={toggleSidebar}
@@ -39,7 +40,7 @@ function Navbar({ toggleSidebar }) {
                 h-11
                 rounded-2xl
                 bg-white
-                shadow-md
+                shadow-sm
                 flex
                 items-center
                 justify-center
@@ -50,21 +51,23 @@ function Navbar({ toggleSidebar }) {
           </div>
 
           {/* Search */}
+
           <div className="flex flex-1 justify-center">
             <div
               className="
                 relative
                 w-full
-                max-w-2xl
+                max-w-[640px]
               "
             >
               <FaSearch
                 className="
                   absolute
-                  left-5
+                  left-6
                   top-1/2
                   -translate-y-1/2
                   text-gray-400
+                  text-[15px]
                 "
               />
 
@@ -73,45 +76,45 @@ function Navbar({ toggleSidebar }) {
                 placeholder="Search tasks..."
                 className="
                   w-full
-                  h-14
-                  rounded-3xl
+                  h-[56px]
+                  rounded-[22px]
+                  bg-white
                   border
                   border-gray-100
-                  bg-white
+                  shadow-sm
                   pl-14
-                  pr-6
-                  shadow-md
+                  pr-5
                   outline-none
-                  transition-all
-                  focus:border-[#57BA98]
-                  focus:ring-4
-                  focus:ring-[#57BA9820]
+                  focus:ring-2
+                  focus:ring-[#57BA98]/20
                 "
               />
             </div>
           </div>
 
-          {/* Right Section */}
-          <div className="flex items-center gap-4">
+          {/* Right */}
+
+          <div className="flex items-center gap-5">
+
             <motion.button
               whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              whileTap={{ scale: 0.97 }}
               className="
                 relative
-                flex
-                h-14
                 w-14
-                items-center
-                justify-center
+                h-14
                 rounded-full
                 bg-white
-                shadow-md
+                shadow-sm
+                flex
+                items-center
+                justify-center
               "
             >
               <FaBell
                 className="
-                  text-lg
                   text-[#57BA98]
+                  text-lg
                 "
               />
 
@@ -120,10 +123,10 @@ function Navbar({ toggleSidebar }) {
                   absolute
                   top-4
                   right-4
-                  h-2.5
                   w-2.5
-                  rounded-full
+                  h-2.5
                   bg-red-500
+                  rounded-full
                 "
               />
             </motion.button>
@@ -133,34 +136,34 @@ function Navbar({ toggleSidebar }) {
               className="
                 flex
                 items-center
-                gap-3
-                rounded-3xl
+                gap-4
                 bg-white
-                px-4
+                rounded-[22px]
+                px-5
                 py-2
-                shadow-md
+                shadow-sm
               "
             >
               <div
                 className="
-                  flex
-                  h-12
                   w-12
-                  items-center
-                  justify-center
+                  h-12
                   rounded-full
                   bg-gradient-to-r
                   from-[#57BA98]
                   to-[#65CCB8]
-                  font-bold
+                  flex
+                  items-center
+                  justify-center
                   text-white
+                  font-bold
                 "
               >
                 {initials}
               </div>
 
               <div className="hidden lg:block">
-                <h3 className="text-sm font-semibold">
+                <h3 className="font-semibold text-sm">
                   {user?.name}
                 </h3>
 
@@ -169,7 +172,12 @@ function Navbar({ toggleSidebar }) {
                 </p>
               </div>
 
-              <FaChevronDown className="text-xs text-gray-400" />
+              <FaChevronDown
+                className="
+                  text-xs
+                  text-gray-400
+                "
+              />
             </motion.div>
           </div>
         </div>

@@ -5,12 +5,10 @@ import {
   FaCog,
   FaSignOutAlt,
 } from "react-icons/fa";
-
 import {
   NavLink,
   useNavigate,
 } from "react-router-dom";
-
 import { motion } from "framer-motion";
 
 import { useAuth } from "../../context/AuthContext";
@@ -18,7 +16,6 @@ import Logo from "../common/Logo";
 
 function Sidebar() {
   const { user, logout } = useAuth();
-
   const navigate = useNavigate();
 
   const menuItems = [
@@ -46,45 +43,31 @@ function Sidebar() {
 
   const handleLogout = () => {
     logout();
-
     navigate("/login");
   };
 
   return (
     <aside
       className="
-        h-full
-        bg-white
-        rounded-r-[32px]
-        shadow-xl
-        border-r
-        border-[var(--border)]
         flex
+        h-full
         flex-col
-        overflow-hidden
+        rounded-[32px]
+        border
+        border-[#EEF2F4]
+        bg-white
+        px-5
+        py-6
+        shadow-lg
       "
     >
-      {/* Logo */}
-
-      <div
-        className="
-          px-7
-          py-8
-          border-b
-          border-[var(--border)]
-        "
-      >
-        <Logo />
-      </div>
-
-      {/* Navigation */}
+      <Logo />
 
       <nav
         className="
+          mt-10
           flex-1
-          px-5
-          py-7
-          space-y-3
+          space-y-2
         "
       >
         {menuItems.map((item) => (
@@ -94,123 +77,101 @@ function Sidebar() {
           >
             {({ isActive }) => (
               <motion.div
-                whileHover={{
-                  x: 4,
-                }}
-                whileTap={{
-                  scale: 0.98,
-                }}
+                whileHover={{ x: 3 }}
+                whileTap={{ scale: 0.98 }}
                 className={`
                   flex
+                  h-14
                   items-center
                   gap-4
-                  px-5
-                  py-4
                   rounded-2xl
-                  font-medium
-                  text-[16px]
+                  px-5
                   transition-all
                   duration-300
                   ${
                     isActive
-                      ? "bg-gradient-to-r from-[#57BA98] to-[#65CCB8] text-white shadow-lg"
-                      : "text-gray-600 hover:bg-[#F5F7F8]"
+                      ? "bg-gradient-to-r from-[#57BA98] to-[#65CCB8] text-white shadow-md"
+                      : "text-[#596579] hover:bg-[#F6F8FA]"
                   }
                 `}
               >
-                <span className="text-xl">
+                <span className="text-lg">
                   {item.icon}
                 </span>
 
-                {item.name}
+                <span className="font-medium">
+                  {item.name}
+                </span>
               </motion.div>
             )}
           </NavLink>
         ))}
       </nav>
 
-      {/* User Section */}
-
-      <div
-        className="
-          p-5
-          border-t
-          border-[var(--border)]
-        "
-      >
+      <div className="space-y-4">
         <div
           className="
+            flex
+            items-center
+            gap-3
             rounded-3xl
             border
             border-[#EEF2F4]
             bg-[#FAFCFC]
-            p-4
-            flex
-            items-center
-            gap-3
+            p-3
           "
         >
           <div
             className="
-              w-12
+              flex
               h-12
+              w-12
+              items-center
+              justify-center
               rounded-full
               bg-gradient-to-r
               from-[#57BA98]
               to-[#65CCB8]
-              flex
-              items-center
-              justify-center
-              text-white
               font-bold
+              text-white
             "
           >
             {user?.name
               ?.charAt(0)
-              ?.toUpperCase() ||
-              "U"}
+              ?.toUpperCase() || "U"}
           </div>
 
           <div className="flex-1 overflow-hidden">
-            <h3 className="font-semibold truncate">
-              {user?.name ||
-                "Guest User"}
+            <h3 className="truncate font-semibold">
+              {user?.name}
             </h3>
 
-            <p className="text-xs text-gray-500 truncate">
+            <p className="truncate text-xs text-gray-500">
               {user?.email}
             </p>
           </div>
         </div>
 
-        <motion.button
-          whileHover={{
-            scale: 1.02,
-          }}
-          whileTap={{
-            scale: 0.98,
-          }}
+        <button
           onClick={handleLogout}
           className="
-            mt-5
-            w-full
-            h-12
-            rounded-2xl
-            bg-red-50
-            hover:bg-red-100
-            text-red-600
-            font-semibold
             flex
+            h-14
+            w-full
             items-center
             justify-center
-            gap-2
-            transition-all
+            gap-3
+            rounded-2xl
+            bg-red-50
+            font-semibold
+            text-red-600
+            transition
+            hover:bg-red-100
           "
         >
           <FaSignOutAlt />
-
           Logout
-        </motion.button>
+        </button>
       </div>
     </aside>
   );
