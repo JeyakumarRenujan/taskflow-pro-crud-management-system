@@ -52,6 +52,9 @@ function Sidebar() {
   return (
     <aside
       className="
+        fixed
+        left-0
+        top-0
         w-72
         h-screen
         bg-white
@@ -60,13 +63,19 @@ function Sidebar() {
         flex
         flex-col
         px-6
-        py-6
-        shadow-lg
+        py-8
+        shadow-sm
       "
     >
-      <Logo />
+      {/* Logo */}
 
-      <nav className="mt-10 flex flex-col gap-3">
+      <div className="pb-8 border-b border-[var(--border)]">
+        <Logo />
+      </div>
+
+      {/* Navigation */}
+
+      <nav className="flex-1 mt-8 space-y-3">
         {menuItems.map((item) => (
           <NavLink
             key={item.name}
@@ -74,29 +83,34 @@ function Sidebar() {
           >
             {({ isActive }) => (
               <motion.div
-                whileHover={{ x: 4 }}
+                whileHover={{
+                  x: 5,
+                }}
+                whileTap={{
+                  scale: 0.98,
+                }}
                 className={`
                   flex
                   items-center
                   gap-4
-                  px-4
-                  py-3
+                  px-5
+                  py-4
                   rounded-2xl
                   transition-all
                   duration-300
                   font-medium
                   ${
                     isActive
-                      ? "bg-[var(--primary)] text-white shadow-md"
+                      ? "bg-[var(--primary)] text-white shadow-lg"
                       : "text-gray-600 hover:bg-[var(--accent)] hover:text-[var(--primary)]"
                   }
                 `}
               >
-                <span className="text-lg">
+                <span className="text-xl">
                   {item.icon}
                 </span>
 
-                <span>
+                <span className="text-[15px]">
                   {item.name}
                 </span>
               </motion.div>
@@ -105,44 +119,64 @@ function Sidebar() {
         ))}
       </nav>
 
-      <div className="mt-auto">
+      {/* User */}
+
+      <div className="pt-6 border-t border-[var(--border)]">
         <div
           className="
             bg-[var(--accent)]
-            rounded-2xl
-            p-4
-            mb-5
+            rounded-3xl
+            p-5
           "
         >
-          <p className="font-semibold text-[var(--text-primary)]">
+          <h3
+            className="
+              font-semibold
+              text-[var(--text-primary)]
+              text-lg
+            "
+          >
             {user?.name || "Guest User"}
-          </p>
+          </h3>
 
-          <p className="text-sm text-[var(--text-secondary)] mt-1">
+          <p
+            className="
+              text-sm
+              text-[var(--text-secondary)]
+              mt-1
+              break-all
+            "
+          >
             {user?.email}
           </p>
         </div>
 
         <motion.button
-          whileHover={{ scale: 1.02 }}
-          whileTap={{ scale: 0.98 }}
+          whileHover={{
+            scale: 1.02,
+          }}
+          whileTap={{
+            scale: 0.98,
+          }}
           onClick={handleLogout}
           className="
+            mt-5
             w-full
-            flex
-            items-center
-            justify-center
-            gap-3
             py-3
             rounded-2xl
             bg-red-50
             hover:bg-red-100
             text-red-600
             font-semibold
+            flex
+            justify-center
+            items-center
+            gap-3
             transition-all
           "
         >
           <FaSignOutAlt />
+
           Logout
         </motion.button>
       </div>

@@ -21,6 +21,7 @@ function Tasks() {
   const [loading, setLoading] = useState(true);
 
   const [search, setSearch] = useState("");
+
   const [statusFilter, setStatusFilter] =
     useState("All");
 
@@ -114,7 +115,7 @@ function Tasks() {
   }, [tasks, search, statusFilter]);
 
   return (
-    <div className="space-y-8">
+    <div className="space-y-10">
       {/* Header */}
 
       <div
@@ -124,17 +125,23 @@ function Tasks() {
           lg:flex-row
           justify-between
           lg:items-center
-          gap-5
+          gap-6
         "
       >
         <div>
-          <h1 className="text-4xl font-bold">
+          <h1 className="text-4xl lg:text-5xl font-bold">
             My Tasks
           </h1>
 
-          <p className="text-gray-500 mt-2">
-            Organize and manage your
-            daily work efficiently.
+          <p
+            className="
+              mt-2
+              text-lg
+              text-[var(--text-secondary)]
+            "
+          >
+            Manage your daily work
+            efficiently.
           </p>
         </div>
 
@@ -144,44 +151,47 @@ function Tasks() {
             setOpenModal(true);
           }}
           className="
-            flex
-            items-center
-            gap-2
+            px-7
+            py-4
+            rounded-2xl
             bg-[var(--primary)]
             hover:bg-[var(--primary-hover)]
             text-white
-            px-6
-            py-3
-            rounded-2xl
+            font-semibold
             shadow-lg
+            flex
+            items-center
+            gap-3
             transition-all
           "
         >
           <FaPlus />
 
-          Add Task
+          Add New Task
         </button>
       </div>
 
-      {/* Search */}
+      {/* Search Panel */}
 
-      <div
+      <section
         className="
           bg-white
-          rounded-3xl
-          p-5
-          shadow-lg
+          rounded-[28px]
+          border
+          border-[var(--border)]
+          shadow-md
+          p-6
           flex
           flex-col
           lg:flex-row
-          gap-4
+          gap-5
         "
       >
         <div className="relative flex-1">
           <FaSearch
             className="
               absolute
-              left-4
+              left-5
               top-1/2
               -translate-y-1/2
               text-gray-400
@@ -199,15 +209,15 @@ function Tasks() {
             }
             className="
               w-full
+              h-12
               pl-12
-              pr-4
-              py-3
               rounded-2xl
               border
               border-[var(--border)]
-              outline-none
+              bg-[var(--background)]
               focus:ring-4
               focus:ring-[var(--accent)]
+              outline-none
             "
           />
         </div>
@@ -220,8 +230,8 @@ function Tasks() {
             )
           }
           className="
+            h-12
             px-5
-            py-3
             rounded-2xl
             border
             border-[var(--border)]
@@ -236,11 +246,12 @@ function Tasks() {
         <button
           onClick={loadTasks}
           className="
-            px-5
-            py-3
+            h-12
+            px-6
             rounded-2xl
             bg-[var(--accent)]
             text-[var(--primary)]
+            font-semibold
             flex
             items-center
             gap-2
@@ -250,31 +261,33 @@ function Tasks() {
 
           Refresh
         </button>
-      </div>
+      </section>
 
-      {/* Content */}
+      {/* Tasks */}
 
       {loading ? (
-        <div className="text-center py-20">
-          Loading Tasks...
+        <div className="py-24 text-center">
+          Loading...
         </div>
       ) : filteredTasks.length === 0 ? (
         <div
           className="
             bg-white
-            rounded-3xl
-            shadow-lg
-            py-20
+            rounded-[28px]
+            border
+            border-[var(--border)]
+            py-24
             text-center
+            shadow-md
           "
         >
           <h2 className="text-3xl font-bold">
-            No Tasks Yet
+            No Tasks Found
           </h2>
 
-          <p className="text-gray-500 mt-3">
-            Click "Add Task" to create
-            your first task.
+          <p className="mt-3 text-gray-500">
+            Create your first task to
+            get started.
           </p>
         </div>
       ) : (
@@ -285,24 +298,22 @@ function Tasks() {
             grid-cols-1
             md:grid-cols-2
             xl:grid-cols-3
-            gap-6
+            gap-7
           "
         >
-          {filteredTasks.map(
-            (task) => (
-              <TaskCard
-                key={task.id}
-                task={task}
-                onEdit={(task) => {
-                  setSelectedTask(task);
-                  setOpenModal(true);
-                }}
-                onDelete={
-                  handleDeleteTask
-                }
-              />
-            )
-          )}
+          {filteredTasks.map((task) => (
+            <TaskCard
+              key={task.id}
+              task={task}
+              onEdit={(task) => {
+                setSelectedTask(task);
+                setOpenModal(true);
+              }}
+              onDelete={
+                handleDeleteTask
+              }
+            />
+          ))}
         </motion.div>
       )}
 

@@ -9,7 +9,7 @@ function StatCard({
   return (
     <motion.div
       whileHover={{
-        y: -6,
+        y: -8,
         scale: 1.02,
       }}
       transition={{
@@ -19,22 +19,37 @@ function StatCard({
         relative
         overflow-hidden
         bg-white
-        rounded-3xl
-        p-6
+        rounded-[28px]
+        p-7
         shadow-lg
         border
         border-[var(--border)]
       "
     >
-      {/* Decorative Circle */}
+      {/* Left Accent */}
 
       <div
         className="
           absolute
-          -right-8
-          -top-8
-          w-24
-          h-24
+          left-0
+          top-0
+          w-2
+          h-full
+        "
+        style={{
+          background: color,
+        }}
+      />
+
+      {/* Background Circle */}
+
+      <div
+        className="
+          absolute
+          -right-10
+          -top-10
+          w-32
+          h-32
           rounded-full
           opacity-10
         "
@@ -48,7 +63,9 @@ function StatCard({
           <p
             className="
               text-sm
-              font-medium
+              uppercase
+              tracking-wide
+              font-semibold
               text-[var(--text-secondary)]
             "
           >
@@ -57,8 +74,8 @@ function StatCard({
 
           <h2
             className="
-              mt-3
-              text-4xl
+              mt-4
+              text-5xl
               font-bold
               text-[var(--text-primary)]
             "
@@ -69,20 +86,19 @@ function StatCard({
 
         <div
           className="
-            w-14
-            h-14
-            rounded-2xl
+            w-16
+            h-16
+            rounded-3xl
             flex
             items-center
             justify-center
-            shadow-sm
           "
           style={{
             background: `${color}20`,
-            color: color,
+            color,
           }}
         >
-          <span className="text-2xl">
+          <span className="text-3xl">
             {icon}
           </span>
         </div>
@@ -90,9 +106,10 @@ function StatCard({
 
       <div
         className="
-          mt-6
-          h-1
+          mt-7
+          h-2
           rounded-full
+          opacity-90
         "
         style={{
           background: color,
