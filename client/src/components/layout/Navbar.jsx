@@ -32,22 +32,23 @@ function Navbar({ toggleSidebar }) {
     >
       <div
         className="
-          h-20
+          h-16
           flex
           items-center
           justify-between
-          px-6
-          lg:px-10
+          px-5
+          lg:px-8
+          gap-4
         "
       >
         {/* Left */}
 
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-4 shrink-0">
           <button
             onClick={toggleSidebar}
             className="
               lg:hidden
-              text-2xl
+              text-xl
               text-[var(--text-primary)]
             "
           >
@@ -57,7 +58,7 @@ function Navbar({ toggleSidebar }) {
           <div>
             <h1
               className="
-                text-3xl
+                text-2xl
                 font-bold
                 text-[var(--text-primary)]
               "
@@ -67,9 +68,8 @@ function Navbar({ toggleSidebar }) {
 
             <p
               className="
-                text-sm
+                text-xs
                 text-[var(--text-secondary)]
-                mt-1
               "
             >
               Welcome back 👋
@@ -85,23 +85,24 @@ function Navbar({ toggleSidebar }) {
             md:flex
             flex-1
             justify-center
-            px-10
+            px-4
           "
         >
           <div
             className="
               relative
               w-full
-              max-w-xl
+              max-w-lg
             "
           >
             <FaSearch
               className="
                 absolute
-                left-5
+                left-4
                 top-1/2
                 -translate-y-1/2
                 text-gray-400
+                text-sm
               "
             />
 
@@ -110,15 +111,15 @@ function Navbar({ toggleSidebar }) {
               placeholder="Search tasks..."
               className="
                 w-full
-                h-12
-                pl-12
-                pr-5
-                rounded-2xl
+                h-10
+                pl-11
+                pr-4
+                rounded-xl
                 bg-[var(--background)]
                 border
                 border-[var(--border)]
                 focus:border-[var(--primary)]
-                focus:ring-4
+                focus:ring-2
                 focus:ring-[var(--accent)]
                 outline-none
                 transition-all
@@ -129,7 +130,7 @@ function Navbar({ toggleSidebar }) {
 
         {/* Right */}
 
-        <div className="flex items-center gap-5">
+        <div className="flex items-center gap-3 shrink-0">
           <motion.button
             whileHover={{
               scale: 1.05,
@@ -139,9 +140,9 @@ function Navbar({ toggleSidebar }) {
             }}
             className="
               relative
-              w-12
-              h-12
-              rounded-2xl
+              w-10
+              h-10
+              rounded-xl
               bg-[var(--accent)]
               flex
               justify-center
@@ -152,7 +153,7 @@ function Navbar({ toggleSidebar }) {
           >
             <FaBell
               className="
-                text-lg
+                text-base
                 text-[var(--primary)]
               "
             />
@@ -160,10 +161,10 @@ function Navbar({ toggleSidebar }) {
             <span
               className="
                 absolute
-                top-3
-                right-3
-                w-2.5
-                h-2.5
+                top-2
+                right-2
+                w-2
+                h-2
                 rounded-full
                 bg-red-500
               "
@@ -176,15 +177,15 @@ function Navbar({ toggleSidebar }) {
               items-center
               gap-3
               bg-[var(--background)]
-              rounded-2xl
+              rounded-xl
               px-3
               py-2
             "
           >
             <div
               className="
-                w-12
-                h-12
+                w-10
+                h-10
                 rounded-full
                 bg-[var(--primary)]
                 text-white
@@ -192,7 +193,6 @@ function Navbar({ toggleSidebar }) {
                 justify-center
                 items-center
                 font-bold
-                text-lg
               "
             >
               {initials}
@@ -202,7 +202,7 @@ function Navbar({ toggleSidebar }) {
               <h3
                 className="
                   font-semibold
-                  text-[15px]
+                  text-sm
                   text-[var(--text-primary)]
                 "
               >
@@ -211,7 +211,7 @@ function Navbar({ toggleSidebar }) {
 
               <p
                 className="
-                  text-xs
+                  text-[11px]
                   text-[var(--text-secondary)]
                 "
               >

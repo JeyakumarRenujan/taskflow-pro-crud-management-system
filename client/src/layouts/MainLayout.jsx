@@ -17,24 +17,31 @@ function MainLayout() {
       className="
         min-h-screen
         bg-[var(--background)]
+        flex
       "
     >
       {/* Desktop Sidebar */}
 
-      <aside
+      <div
         className="
           hidden
           lg:block
-          fixed
-          top-0
-          left-0
           w-72
-          h-screen
-          z-40
+          shrink-0
         "
       >
-        <Sidebar />
-      </aside>
+        <div
+          className="
+            fixed
+            left-0
+            top-0
+            w-72
+            h-screen
+          "
+        >
+          <Sidebar />
+        </div>
+      </div>
 
       {/* Mobile Sidebar */}
 
@@ -54,7 +61,6 @@ function MainLayout() {
               fixed
               inset-0
               bg-black/50
-              backdrop-blur-sm
               z-50
               lg:hidden
             "
@@ -64,13 +70,13 @@ function MainLayout() {
           >
             <motion.div
               initial={{
-                x: -320,
+                x: -300,
               }}
               animate={{
                 x: 0,
               }}
               exit={{
-                x: -320,
+                x: -300,
               }}
               transition={{
                 duration: 0.3,
@@ -89,11 +95,11 @@ function MainLayout() {
         )}
       </AnimatePresence>
 
-      {/* Main Area */}
+      {/* Main Content */}
 
       <div
         className="
-          lg:ml-72
+          flex-1
           min-h-screen
           flex
           flex-col
@@ -110,20 +116,10 @@ function MainLayout() {
         <main
           className="
             flex-1
-            p-6
-            md:p-8
-            xl:p-10
+            p-8
           "
         >
-          <div
-            className="
-              w-full
-              max-w-7xl
-              mx-auto
-            "
-          >
-            <Outlet />
-          </div>
+          <Outlet />
         </main>
       </div>
     </div>

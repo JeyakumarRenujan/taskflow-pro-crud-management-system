@@ -46,15 +46,13 @@ function Sidebar() {
 
   const handleLogout = () => {
     logout();
+
     navigate("/login");
   };
 
   return (
     <aside
       className="
-        fixed
-        left-0
-        top-0
         w-72
         h-screen
         bg-white
@@ -62,20 +60,34 @@ function Sidebar() {
         border-[var(--border)]
         flex
         flex-col
-        px-6
-        py-8
         shadow-sm
+        overflow-hidden
       "
     >
       {/* Logo */}
 
-      <div className="pb-8 border-b border-[var(--border)]">
+      <div
+        className="
+          px-6
+          py-6
+          border-b
+          border-[var(--border)]
+        "
+      >
         <Logo />
       </div>
 
       {/* Navigation */}
 
-      <nav className="flex-1 mt-8 space-y-3">
+      <nav
+        className="
+          flex-1
+          px-4
+          py-6
+          space-y-2
+          overflow-y-auto
+        "
+      >
         {menuItems.map((item) => (
           <NavLink
             key={item.name}
@@ -84,7 +96,7 @@ function Sidebar() {
             {({ isActive }) => (
               <motion.div
                 whileHover={{
-                  x: 5,
+                  x: 4,
                 }}
                 whileTap={{
                   scale: 0.98,
@@ -93,24 +105,23 @@ function Sidebar() {
                   flex
                   items-center
                   gap-4
-                  px-5
-                  py-4
+                  px-4
+                  py-3
                   rounded-2xl
                   transition-all
                   duration-300
-                  font-medium
                   ${
                     isActive
-                      ? "bg-[var(--primary)] text-white shadow-lg"
-                      : "text-gray-600 hover:bg-[var(--accent)] hover:text-[var(--primary)]"
+                      ? "bg-[var(--primary)] text-white shadow-md"
+                      : "text-gray-600 hover:bg-gray-100"
                   }
                 `}
               >
-                <span className="text-xl">
+                <span className="text-lg">
                   {item.icon}
                 </span>
 
-                <span className="text-[15px]">
+                <span className="font-medium">
                   {item.name}
                 </span>
               </motion.div>
@@ -121,32 +132,21 @@ function Sidebar() {
 
       {/* User */}
 
-      <div className="pt-6 border-t border-[var(--border)]">
-        <div
-          className="
-            bg-[var(--accent)]
-            rounded-3xl
-            p-5
-          "
-        >
-          <h3
-            className="
-              font-semibold
-              text-[var(--text-primary)]
-              text-lg
-            "
-          >
-            {user?.name || "Guest User"}
+      <div
+        className="
+          p-5
+          border-t
+          border-[var(--border)]
+          bg-white
+        "
+      >
+        <div className="mb-4">
+          <h3 className="font-semibold text-gray-800">
+            {user?.name ||
+              "Guest User"}
           </h3>
 
-          <p
-            className="
-              text-sm
-              text-[var(--text-secondary)]
-              mt-1
-              break-all
-            "
-          >
+          <p className="text-sm text-gray-500 break-all">
             {user?.email}
           </p>
         </div>
@@ -160,18 +160,17 @@ function Sidebar() {
           }}
           onClick={handleLogout}
           className="
-            mt-5
             w-full
             py-3
-            rounded-2xl
+            rounded-xl
             bg-red-50
             hover:bg-red-100
             text-red-600
             font-semibold
             flex
-            justify-center
             items-center
-            gap-3
+            justify-center
+            gap-2
             transition-all
           "
         >
